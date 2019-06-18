@@ -1,0 +1,70 @@
+def main():
+    MIN_PASSWORD_LENGTH = 6
+
+    MAX_PASSWORD_LENGTH = 14
+
+    PASSWORD_LOG_FILE = "Password_log_MichaelOvereem.txt"
+    import datetime
+    print("Password Checker Program - 4 Developed By MichaelOvereem")
+
+    password = (input("Enter password"))
+
+    password_length = len(password)
+    errorMessage = "";
+
+    # while loop
+
+    while password_length < MIN_PASSWORD_LENGTH or password_length > MAX_PASSWORD_LENGTH:
+        date = datetime.datetime.now()
+        errorMessage = str(date)
+        if password_length < MIN_PASSWORD_LENGTH:
+
+            errorMessage += ", password < 6\n "
+            log_file = open(PASSWORD_LOG_FILE, "a")
+            log_file.write(errorMessage)
+            log_file.close()
+            print("your password length is less than 6 characters")
+        else:
+            errorMessage += ", password > 14\n"
+            log_file = open(PASSWORD_LOG_FILE, "a")
+            log_file.write(errorMessage)
+            log_file.close()
+        print("Not Successful. Your password requires a minimum of 6 and a maximum of 14 characters.")
+        print("password length you entered was:", password_length)
+
+        password = input("Enter Password Again:")
+        password_length = len(password)
+
+    if password.isdigit():
+        print("password length you entered was:", password_length)
+        print("your password is successful, but only contains numbers")
+
+    elif password.isalpha():
+        print("password length you entered was:", password_length)
+        print("Password is successful, but only contains letters")
+    else:
+        print("Your Password is strong. It contains a combination of numbers, letters and other characters.")
+        print("password length you entered was:", password_length)
+        print("Password successful !!!")
+
+    lessthanCount = 0
+    morethanCount = 0
+    error_list = []
+    log_file = open(PASSWORD_LOG_FILE, "r")
+
+    for line in log_file:
+        error_list.append(line)
+    log_file.close()
+    for count in range(0, len(error_list)-1):
+
+        if error_list[count].find('<') != -1:
+            lessthanCount += 1
+        else:
+            morethanCount += 1
+        print(error_list[count])
+
+    print("Number of passwords less than 6", lessthanCount)
+    print("Number of passwords more than 14", morethanCount)
+
+
+main()
